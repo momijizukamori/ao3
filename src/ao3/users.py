@@ -289,9 +289,9 @@ class User(object):
                         #sometimes the word count is blank
                         words_tag=li_tag.find('dd',attrs={'class','words'})
                         if len(words_tag.contents)==0:
-                            words='0'
+                            words=0
                         else:
-                            words=str(words_tag.contents[0])
+                            words=int(words_tag.contents[0].replace(',', ''))
 
                         hits=str(li_tag.find('dd',attrs={'class','hits'}).contents[0])
                     else:
@@ -300,9 +300,9 @@ class User(object):
                         stats_tag=li_tag.find('dl',attrs={'class','stats'})
                         items = stats_tag.find_all('dd')
                         if len(items[0].contents)==0:
-                            words='0'
+                            words=0
                         else:
-                            words=str(items[0].contents[0])
+                            words=int(items[0].contents[0].replace(',', ''))
                         
                         if len(items[1].contents)==0:
                             works=0
@@ -360,8 +360,6 @@ class User(object):
             # If there's another page of results, this contains an <a> tag
             # pointing to the next page.  Otherwise, it contains a <span>
             # tag with the 'disabled' class.
-            if page_no > 10:
-                break
             next_button = soup.find('li', attrs={'class': 'next'})
             if next_button.find('span', attrs={'class': 'disabled'}):
                 break
